@@ -10,10 +10,29 @@
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery.mobile-1.3.1.min.js"></script>
         <script>
+            function GetURLParameter(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                var sURLVariables = sPageURL.split('&');
+                for (var i = 0; i < sURLVariables.length; i++)
+                {
+                    var sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] == sParam)
+                    {
+                        return sParameterName[1];
+                    }
+                }
+                return false;
+            }
             $(document).ready(function () {
+                var parametro = GetURLParameter("cat");                              
+                urljson = "http://www.elvigiatv.es/api/get_recent_posts/?dev=1";
+                if(parametro != false){
+                   urljson = "http://www.elvigiatv.es/api/get_category_posts/?id="+parametro+"&count=10000";
+                }
                 $.ajax({
                     type: "GET",
-                    url: "http://www.elvigiatv.es/api/get_recent_posts/?dev=1",
+                    url: urljson,
                     dataType: "json",
                     success: function(resp){
                     // we have the response
@@ -23,13 +42,24 @@
                     alert('Error121212: ' + e);  
                     }  
                });
+               $.ajax({
+                    type: "GET",
+                    url: "http://www.elvigiatv.es/api/get_category_index/?dev=1",
+                    dataType: "json",
+                    success: function(resp){
+                      mostrarRespuestaCategorias(resp);
+                    },
+                    error: function(e){
+                    alert('Error121212: ' + e);  
+                    }  
+                    });
             });
             function mostrarRespuestaPosts(respuesta) {
                 var contenido = '';
                 for(var i=0; i<respuesta.count; i++) {
                     var post = respuesta.posts[i];
                     contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="#" data-role="button" data-inline="true">Ver vídeo</a></div></div></div></article>';
-                                    }
+                }
                 $("#contenedor").append(contenido);
                 $("div").trigger( "create" );
                 $("article div p").addClass("texto-titulo");
@@ -42,19 +72,24 @@
                 var videoId = campos[campos.length -1];
                 return "http://www.elvigiatv.es/images/thumbnails/"+videoId+"s.jpg";
             }
+            function mostrarRespuestaCategorias(respuesta) {
+                var contenido = '';
+                for(var i=0; i<respuesta.count;i++) {
+                    var categoria = respuesta.categories[i];
+                    contenido = contenido +'<li><a href="index.html?cat='+categoria.id+'" data-ajax="false">'+categoria.title+'</a></li>';
+                }
+                $("#listacategorias").append(contenido);
+                $("#listacategorias").listview( "refresh" );
+            }
                 
         </script>
 	</head>
 	<body>
 		<div data-role="page" data-theme="a">
 			<div data-role="panel" id="mypanel" data-position-fixed="true">
-                <ul data-role="listview" data-theme="b" data-divider-theme="b" data-icon="false" data-global-nav="demos" class="jqm-list ui-listview">
+                <ul data-role="listview" data-theme="b" data-divider-theme="b" data-icon="false" data-global-nav="demos" class="jqm-list ui-listview" id="listacategorias">
                     <li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-d ui-first-child">Categorías</li>
-                    <li><a href="">Acura</a></li>
-                    <li><a href="">Audi</a></li>
-                    <li><a href="">BMW</a></li>
-                    <li><a href="">Cadillac</a></li>
-                    <li><a href="">Ferrari</a></li>
+                    <li><a href="index.html" data-ajax="false">Últimos Programas</a></li>                    
                 </ul>
 			</div>
   			<div data-role="header" data-position="fixed" data-tap-toggle="false">

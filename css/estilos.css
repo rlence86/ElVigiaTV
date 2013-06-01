@@ -1,0 +1,34 @@
+article {
+    
+}
+.cuadrado {
+	width:95%;    background-color: #E6F6FF;
+    display: block;
+	margin-left: auto;
+	margin-right: auto;
+    margin-top: 15px;
+    text-align:center;
+    -webkit-box-shadow: 2px 2px 2px rgba(0, 42, 68, 0.75);
+	-moz-box-shadow:    2px 2px 2px rgba(0, 42, 68, 0.75);
+	box-shadow:         2px 2px 2px rgba(0, 42, 68, 0.75);
+}
+.media {
+    width:80%;
+    position: relative;
+    margin-left: auto;
+	margin-right: auto;
+}
+.texto-titulo {
+    margin-left:15px;
+    margin-right:15px;
+    font-size: 5vw;
+}
+.imagen {
+    width: 100%;
+}
+.parrafo {
+    margin-left:15px;
+    margin-right:15px;
+    text-align:justify;
+    font-size: 18;
+}

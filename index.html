@@ -25,7 +25,7 @@
                        mostrarRespuestaPosts(resp);
                        },
                        error: function(e){
-                       alert('Error121212: ' + e);
+                       alert('Ocurrió un error');
                        }
                        });
                 $.ajax({
@@ -36,7 +36,7 @@
                        mostrarRespuestaCategorias(resp);
                        },
                        error: function(e){
-                       alert('Error121212: ' + e);
+                       alert('Ocurrió un error');
                        }  
                        });
             }
@@ -67,31 +67,29 @@
                             mostrarRespuestaPostsC(resp);
                        },
                        error: function(e){
-                            alert('Error121212: ' + e);
+                            alert('Ocurrió un error');
                        }
                        });
             }
             function mostrarRespuestaPosts(respuesta) {
-                contenido = '';
-                for(var i=0; i<respuesta.count; i++) {
-                    var post = respuesta.posts[i];
-                    contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="#" data-role="button" data-inline="true">Ver vídeo</a></div></div></div></article>';
-                }
-                contenido = $(contenido);
-                $("#contenedor").html(contenido);
-                $("div").trigger( "create" );
-                $("article div p").addClass("texto-titulo");
-                $("div[data-role='collapsible'] p").removeClass("texto-titulo");
-                $("div[data-role='collapsible'] p").addClass("parrafo");
+                $("#contenedor").html(renderContenido(respuesta));
+                postRender();
             }
             function mostrarRespuestaPostsC(respuesta) {
+                $("#tituloCat").html(respuesta.category.title);
+                $("#contenedor2").html(renderContenido(respuesta));
+                postRender();
+            }
+            function renderContenido(respuesta){
                 contenido = '';
                 for(var i=0; i<respuesta.count; i++) {
                     var post = respuesta.posts[i];
                     contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="#" data-role="button" data-inline="true">Ver vídeo</a></div></div></div></article>';
                 }
                 contenido = $(contenido);
-                $("#contenedor2").html(contenido);
+                return contenido;
+            }
+            function postRender(){
                 $("div").trigger( "create" );
                 $("article div p").addClass("texto-titulo");
                 $("div[data-role='collapsible'] p").removeClass("texto-titulo");
@@ -107,7 +105,7 @@
                 var contenido = '';
                 for(var i=0; i<respuesta.count;i++) {
                     var categoria = respuesta.categories[i];
-                    contenido = contenido +'<li><a href="" onClick="verCategoria('+categoria.id+');" data-transition="slide">'+categoria.title+'</a></li>';
+                    contenido = contenido +'<li><a href="categoria.html?cat='+categoria.id+'" data-transition="slide">'+categoria.title+'</a></li>';
                 }
                 $("#listacategorias").append(contenido);
                 $("#listacategorias").listview( "refresh" );
@@ -129,7 +127,7 @@
                 </ul>
             </div>
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
-                <a href="#mypanel" data-rel="open" data-role="button" id="botonmenu">Menú</a><h1>El Vigía TV</h1>
+                <a href="#mypanel" data-rel="open" data-role="button" data-icon="bars" id="botonmenu">Menú</a><h1>El Vigía TV</h1>
             </div><div data-role="content" data-theme="b" id="contenedor">
             </div>
         </div>

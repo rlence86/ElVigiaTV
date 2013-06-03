@@ -15,6 +15,7 @@
             });
             function cargarIndex()
             {
+                $.mobile.loading('show');
                 urljson = "http://www.elvigiatv.es/api/get_recent_posts/?dev=1";
                 $.ajax({
                        type: "GET",
@@ -74,11 +75,13 @@
             function mostrarRespuestaPosts(respuesta) {
                 $("#contenedor").html(renderContenido(respuesta));
                 postRender();
+                $.mobile.loading('hide');
             }
             function mostrarRespuestaPostsC(respuesta) {
                 $("#tituloCat").html(respuesta.category.title);
                 $("#contenedor2").html(renderContenido(respuesta));
                 postRender();
+                $.mobile.loading('hide');
             }
             function renderContenido(respuesta){
                 contenido = '';

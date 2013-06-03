@@ -36,3 +36,6 @@ article {
     background-color: #0351b6;
     text-align: center;
 }
+#contenedor, #contenedor2 {
+    min-height: 400px;
+}

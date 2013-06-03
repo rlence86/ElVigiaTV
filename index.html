@@ -78,7 +78,6 @@
                 $.mobile.loading('hide');
             }
             function mostrarRespuestaPostsC(respuesta) {
-                $("#tituloCat").html(respuesta.category.title);
                 $("#contenedor2").html(renderContenido(respuesta));
                 postRender();
                 $.mobile.loading('hide');

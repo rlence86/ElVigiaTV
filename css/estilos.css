@@ -1,5 +1,5 @@
-article {
-    
+body {
+    -webkit-touch-callout: none;
 }
 .cuadrado {
 	width:95%;    background-color: #E6F6FF;

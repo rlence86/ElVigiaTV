@@ -7,7 +7,11 @@
   			<div data-role="content" data-theme="b" id="contenedor2">
                 <script>
     			$("div[data-role='page']").on("pageshow", function(){
-                     $.mobile.loading('show');
+                     $.mobile.loading( 'show', {
+                          text: "Cargando",
+                          textVisible: true,
+                          textonly: true
+                     });
                      cargarCategoria(GetURLParameter("cat"));
                 });
                 </script>

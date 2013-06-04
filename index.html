@@ -15,7 +15,11 @@
             });
             function cargarIndex()
             {
-                $.mobile.loading('show');
+                $.mobile.loading( 'show', {
+                                 text: "Cargando",
+                                 textVisible: true,
+                                 textonly: true
+                                 });
                 urljson = "http://www.elvigiatv.es/api/get_recent_posts/?dev=1";
                 $.ajax({
                        type: "GET",
@@ -44,6 +48,10 @@
             function GetURLParameter(sParam)
             {
                 var sPageURL = window.location.search.substring(1);
+                return GetParameter(sPageURL, sParam);
+            }
+            function GetParameter(sPageURL, sParam)
+            {
                 var sURLVariables = sPageURL.split('&');
                 for (var i = 0; i < sURLVariables.length; i++)
                 {
@@ -99,9 +107,16 @@
             }
             function getImagen(post) {
                 var video = post.video;
-                var campos = video.split('/');
-                var videoId = campos[campos.length -1];
-                return "http://www.elvigiatv.es/images/thumbnails/"+videoId+"s.jpg";
+                if (video.indexOf("vimeo.com") >= 0) {
+                    var campos = video.split('/');
+                    var videoId = campos[campos.length -1];
+                    return "http://www.elvigiatv.es/images/thumbnails/"+videoId+"s.jpg";
+                } else if (video.indexOf("youtube.com") >= 0) {
+                    var parametrosVideo = video.split("?")[1];
+                    var videoVimeo = GetParameter(parametrosVideo, "v");
+                    var urlImagen = "http://img.youtube.com/vi/"+videoVimeo+"/1.jpg";
+                    return urlImagen;
+                }
             }
             function mostrarRespuestaCategorias(respuesta) {
                 var contenido = '';

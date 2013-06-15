@@ -36,6 +36,6 @@ body {
     background-color: #0351b6;
     text-align: center;
 }
-#contenedor, #contenedor2 {
-    min-height: 400px;
+#contenedor, #contenedor2, #contenedor3 {
+    min-height: 600px;
 }

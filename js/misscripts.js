@@ -125,7 +125,7 @@
                 urlVideo = '';
                 if(video.indexOf("vimeo.com")>=0){
                     urlVideo = getVimeoURL(video);
-                    $("#contenedor3").html('<iframe style="margin-top: 90px" src='+urlVideo+' width="100%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>');
+                    $("#contenedor3").html('<iframe style="margin-top: 90px" src='+urlVideo+' width="100%" height="30%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>');
                 } else if (video.indexOf("youtube.com")) {
                     urlVideo = video;
                 }

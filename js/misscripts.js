@@ -82,7 +82,7 @@
                 contenido = '';
                 for(var i=0; i<respuesta.count; i++) {
                     var post = respuesta.posts[i];
-                    contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="video.html?video='+post.video+'" data-role="button" data-inline="true">Ver vídeo</a></div></div></div></article>';
+                    contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="video.html?video='+post.video+'" data-role="button" data-inline="true" data-transition="slideup">Ver vídeo</a></div></div></div></article>';
                 }
                 contenido = $(contenido);
                 return contenido;

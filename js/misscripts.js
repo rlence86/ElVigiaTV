@@ -95,7 +95,7 @@
                 contenido = '';
                 for(var i=0; i<respuesta.count; i++) {
                     var post = respuesta.posts[i];
-                    contenido = contenido + '<article><div data-role="popup" id="popup'+i+'" data-overlay-theme="a" data-theme="d" data-tolerance="15,15" class="ui-content"><iframe src="'+getVimeoURL(post.video)+'" class="video" seamless></iframe></div><div class="cuadrado"><br><div class="media"><a href="#popup'+i+'" data-rel="popup"><img src='+getImagen(post)+' class="imagen"/></a></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div></div></div></article>';
+                    contenido = contenido + '<article><div data-role="popup" id="popup'+i+'" data-overlay-theme="a" data-theme="d" data-tolerance="15,15" class="ui-content"><iframe src="'+getVideoURL(post.video)+'" class="video" frameborder="0" allowfullscreen seamless></iframe></div><div class="cuadrado"><br><div class="media"><a href="#popup'+i+'" data-rel="popup"><img src='+getImagen(post)+' class="imagen"/></a></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div></div></div></article>';
                 }
                 contenido = $(contenido);
                 return contenido;
@@ -137,12 +137,23 @@
             $("iframe").load(function() {
                 alert("cargado");
             });
-            function cargarVideo(video){
-                $('<iframe class="video" src='+getVimeoURL(video)+' frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>').appendTo("#contenedor3").load(function() {
-                          $.mobile.loading('hide');
-                    });
+            function getVideoURL(direccion){
+                if(direccion.indexOf("vimeo.com") !== -1){
+                    return getVimeoURL(direccion);
+                } else if(direccion.indexOf("youtube.com") !== -1){
+                    return getYoutubeURL(direccion);
+                }
             }
             function getVimeoURL(direccion){
                 var urlPartida = direccion.split("/");
                 return 'http://player.vimeo.com/video/'+urlPartida[3];
+            }
+            function getYoutubeURL(direccion){
+                var video_id = direccion.split('v=')[1];
+                var ampersandPosition = video_id.indexOf('&');
+                if(ampersandPosition != -1) {
+                    video_id = video_id.substring(0, ampersandPosition);
+                }
+                var urlDevuelta = 'http://www.youtube.com/embed/'+video_id;
+                return urlDevuelta;
             }

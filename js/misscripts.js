@@ -1,3 +1,11 @@
+            $(document).ready(function(){
+                  $.mobile.loading( 'show', {
+                                   text: "Cargando",
+                                   textVisible: true,
+                                   textonly: true
+                                   });
+                  cargarIndex();
+                  });
             function cargarIndex()
             {
                 urljson = "http://www.elvigiatv.es/api/get_recent_posts/?dev=1";
@@ -87,7 +95,7 @@
                 contenido = '';
                 for(var i=0; i<respuesta.count; i++) {
                     var post = respuesta.posts[i];
-                    contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="video.html?video='+post.video+'" data-role="button" data-inline="true" data-transition="slide">Ver vídeo</a></div></div></div></article>';
+                    contenido = contenido + '<article><div data-role="popup" id="popup'+i+'" data-overlay-theme="a" data-theme="d" data-tolerance="15,15" class="ui-content"><iframe src="'+getVimeoURL(post.video)+'" class="video" seamless></iframe></div><div class="cuadrado"><br><div class="media"><a href="#popup'+i+'" data-rel="popup"><img src='+getImagen(post)+' class="imagen"/></a></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div></div></div></article>';
                 }
                 contenido = $(contenido);
                 return contenido;
@@ -130,7 +138,11 @@
                 alert("cargado");
             });
             function cargarVideo(video){
-                $('<iframe onload="alert("hola")" style="margin-top: 0px" src='+video+' width="100%" height="30%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>').appendTo("#contenedor3").load(function() {
-                                                                                                                                                                                                                                              $.mobile.loading('hide');
-                                                                                                                                                                                                                                              });
+                $('<iframe class="video" src='+getVimeoURL(video)+' frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>').appendTo("#contenedor3").load(function() {
+                          $.mobile.loading('hide');
+                    });
+            }
+            function getVimeoURL(direccion){
+                var urlPartida = direccion.split("/");
+                return 'http://player.vimeo.com/video/'+urlPartida[3];
             }

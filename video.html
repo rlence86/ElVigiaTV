@@ -7,7 +7,12 @@
   			<div data-role="content" data-theme="b" id="contenedor3">
                 <script>
     			$("div[data-role='page']").on("pageshow", function(){
-                     cargarVideo(GetURLParameter("video"));
+                                              $.mobile.loading( 'show', {
+                                                               text: "Cargando",
+                                                               textVisible: true,
+                                                               textonly: true
+                                                               });
+                        cargarVideo(GetURLParameter("video"));
                 });
                 </script>
             </div> 

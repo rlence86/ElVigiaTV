@@ -1,13 +1,5 @@
-            $(document).ready(function() {
-                  cargarIndex();
-            });
             function cargarIndex()
             {
-                $.mobile.loading( 'show', {
-                                 text: "Cargando",
-                                 textVisible: true,
-                                 textonly: true
-                                 });
                 urljson = "http://www.elvigiatv.es/api/get_recent_posts/?dev=1";
                 $.ajax({
                        type: "GET",
@@ -51,17 +43,17 @@
                 }
                 return false;
             }
-            function cargarCategoria(catId){
+            function cargarCategoria(catId,pagina){
                 var parametro = GetURLParameter("cat");
                 if(parametro != false){
-                    urljson = "http://www.elvigiatv.es/api/get_category_posts/?id="+parametro+"&count=4";
+                    urljson = "http://www.elvigiatv.es/api/get_category_posts/?id="+parametro+"&page="+pagina;
                 }
                 $.ajax({
                        type: "GET",
                        url: urljson,
                        dataType: "json",
                        success: function(resp){
-                            mostrarRespuestaPostsC(resp);
+                            mostrarRespuestaPostsC(resp,pagina);
                        },
                        error: function(e){
                             alert('Ocurrió un error');
@@ -73,8 +65,21 @@
                 postRender();
                 $.mobile.loading('hide');
             }
-            function mostrarRespuestaPostsC(respuesta) {
+            function mostrarRespuestaPostsC(respuesta,pagina) {
+                var limite = parseInt(respuesta.pages);
+                var numPag = parseInt(pagina);
+                var paginanueva = numPag + 1;
+                var paginaanterior = numPag - 1;
                 $("#contenedor2").html(renderContenido(respuesta));
+                if(numPag > 1 && numPag < limite){
+                $("#contenedor2").append('<a href="categoria.html?cat='+respuesta.category.id+'&pag='+paginaanterior+'" data-role="button" data-icon="arrow-l" data-iconpos="left" data-inline="true" data-transition="slide" data-direction="reverse">Anterior</a><a style="float: right;" href="categoria.html?cat='+respuesta.category.id+'&pag='+paginanueva+'" data-role="button" data-icon="arrow-r" data-iconpos="right" data-inline="true" data-transition="slide">Siguiente</a>');
+                } else if (numPag == limite && numPag == 1) {
+                    $("#contenedor2").append('');
+                } else if (numPag == limite) {
+                    $("#contenedor2").append('<a href="categoria.html?cat='+respuesta.category.id+'&pag='+paginaanterior+'" data-role="button" data-icon="arrow-l" data-iconpos="left" data-inline="true" data-transition="slide" data-direction="reverse">Anterior</a>');
+                } else if (numPag == 1){
+                    $("#contenedor2").append('<a style="float: right;" href="categoria.html?cat='+respuesta.category.id+'&pag='+paginanueva+'" data-role="button" data-icon="arrow-r" data-iconpos="right" data-inline="true" data-transition="slide">Siguiente</a>');
+                } 
                 postRender();
                 $.mobile.loading('hide');
             }
@@ -82,7 +87,7 @@
                 contenido = '';
                 for(var i=0; i<respuesta.count; i++) {
                     var post = respuesta.posts[i];
-                    contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="video.html?video='+post.video+'" data-role="button" data-inline="true" data-transition="slideup">Ver vídeo</a></div></div></div></article>';
+                    contenido = contenido + '<article><div class="cuadrado"><br><div class="media"><img src='+getImagen(post)+' class="imagen"/></div><p id="titulo">'+post.title+'</p><div data-role="collapsible-set" data-inset="false"><div data-role="collapsible"><h3>Más info...</h3><p>'+post.content+'</p></div><div data-role="collapsible"><h3>Programa</h3><a href="video.html?video='+post.video+'" data-role="button" data-inline="true" data-transition="slide">Ver vídeo</a></div></div></div></article>';
                 }
                 contenido = $(contenido);
                 return contenido;
@@ -110,9 +115,9 @@
                 var contenido = '';
                 for(var i=0; i<respuesta.count;i++) {
                     var categoria = respuesta.categories[i];
-                    contenido = contenido +'<li><a href="categoria.html?cat='+categoria.id+'" data-transition="slide">'+categoria.title+'</a></li>';
+                    contenido = contenido +'<li><a href="categoria.html?cat='+categoria.id+'&pag=1" data-transition="slide">'+categoria.title+'</a></li>';
                 }
-                $("#listacategorias").append(contenido);
+                $("#listacategorias").html(contenido);
                 $("#listacategorias").listview( "refresh" );
             }
             function verCategoria(cat){
@@ -121,17 +126,11 @@
                                     reloadPage: true
                 });
             }
+            $("iframe").load(function() {
+                alert("cargado");
+            });
             function cargarVideo(video){
-                urlVideo = '';
-                if(video.indexOf("vimeo.com")>=0){
-                    urlVideo = getVimeoURL(video);
-                    $("#contenedor3").html('<iframe style="margin-top: 90px" src='+urlVideo+' width="100%" height="30%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>');
-                } else if (video.indexOf("youtube.com")) {
-                    urlVideo = video;
-                }
-                postRender();
-            }
-            function getVimeoURL(url){
-                var urlPartida = url.split("/");
-                return 'http://player.vimeo.com/video/'+urlPartida[3];
+                $('<iframe onload="alert("hola")" style="margin-top: 0px" src='+video+' width="100%" height="30%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>').appendTo("#contenedor3").load(function() {
+                                                                                                                                                                                                                                              $.mobile.loading('hide');
+                                                                                                                                                                                                                                              });
             }

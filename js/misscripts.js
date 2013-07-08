@@ -103,6 +103,7 @@
             function mostrarErrorIndex(){
                 $("#contenedor").html('<div class="cuadrado"><img src="themes/images/logoerror.png" class="fotoerror"/><p class="textoError">Ocurrió un error cargando el contenido de El Vigía TV.</p><p class="textoError">Comprueba que tienes activa tu conexión a Internet e inténtalo de nuevo.</p></div>');
                 postRender();
+                $("#botonmenu").hide();
                 $.mobile.loading('hide');
             }
             function mostrarErrorCategoria(){

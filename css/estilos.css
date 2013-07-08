@@ -36,8 +36,13 @@ body {
     background-color: #0351b6;
     text-align: center;
 }
-#contenedor, #contenedor2, #contenedor3 {
-}
+    .textoError {
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
 
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
   .video {
@@ -47,6 +52,17 @@ body {
   .videocont {
         height:1024px;
   }
+  #contenedor, #contenedor2 {
+        text-align:justify;
+        height: 1024px;
+    }
+    .fotoerror{
+        height:500px;
+        width:500px;
+    }
+    .textoError {
+        font-size: 25pt;
+    }
 }
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) {
   .video {
@@ -56,6 +72,19 @@ body {
     .videocont {
         height:768px;
   }
+  #contenedor, #contenedor2 {
+        text-align:justify;
+        height: 768px;
+    }
+    .fotoerror{
+        height:500px;
+        width:500px;
+    }
+    
+    .textoError {
+        font-size: 25pt;
+    }
+
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation:portrait) {
@@ -63,6 +92,19 @@ body {
         width:250px;
         height:180px;
     }
+    #contenedor, #contenedor2 {
+        text-align:justify;
+        height: 400px;
+    }
+    .fotoerror{
+        height:150px;
+        width:150px;
+    }
+    
+    .textoError {
+        font-size: 15pt;
+    }
+
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation:landscape) {
@@ -70,4 +112,17 @@ body {
         width:350px;
         height:180px;
     }
+    #contenedor, #contenedor2 {
+        text-align:justify;
+        height: 230px;
+    }
+    .fotoerror{
+        height:150px;
+        width:150px;
+    }
+    
+    .textoError {
+        font-size: 15pt;
+    }
+
 }

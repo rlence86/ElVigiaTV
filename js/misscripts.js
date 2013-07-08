@@ -18,7 +18,7 @@
                        mostrarRespuestaPosts(resp);
                        },
                        error: function(e){
-                       alert('Ocurrió un error');
+                            mostrarErrorIndex();
                        }
                        });
                 $.ajax({
@@ -29,7 +29,7 @@
                        mostrarRespuestaCategorias(resp);
                        },
                        error: function(e){
-                       alert('Ocurrió un error');
+                       
                        }  
                        });
             }
@@ -64,7 +64,7 @@
                             mostrarRespuestaPostsC(resp,pagina);
                        },
                        error: function(e){
-                            alert('Ocurrió un error');
+                            mostrarErrorCategoria();
                        }
                        });
             }
@@ -99,6 +99,16 @@
                 }
                 contenido = $(contenido);
                 return contenido;
+            }
+            function mostrarErrorIndex(){
+                $("#contenedor").html('<div class="cuadrado"><img src="themes/images/logoerror.png" class="fotoerror"/><p class="textoError">Ocurrió un error cargando el contenido de El Vigía TV.</p><p class="textoError">Comprueba que tienes activa tu conexión a Internet e inténtalo de nuevo.</p></div>');
+                postRender();
+                $.mobile.loading('hide');
+            }
+            function mostrarErrorCategoria(){
+                $("#contenedor2").html('<div class="cuadrado"><img src="themes/images/logoerror.png" class="fotoerror"/><p class="textoError">Ocurrió un error cargando el contenido de El Vigía TV.</p><p class="textoError">Comprueba que tienes activa tu conexión a Internet e inténtalo de nuevo.</p></div>');
+                postRender();
+                $.mobile.loading('hide');
             }
             function postRender(){
                 $("div").trigger( "create" );

@@ -87,7 +87,7 @@
                     $("#contenedor2").append('<a href="categoria.html?cat='+respuesta.category.id+'&pag='+paginaanterior+'" data-role="button" data-icon="arrow-l" data-iconpos="left" data-inline="true" data-transition="slide" data-direction="reverse">Anterior</a>');
                 } else if (numPag == 1){
                     $("#contenedor2").append('<a style="float: right;" href="categoria.html?cat='+respuesta.category.id+'&pag='+paginanueva+'" data-role="button" data-icon="arrow-r" data-iconpos="right" data-inline="true" data-transition="slide">Siguiente</a>');
-                } 
+                }
                 postRender();
                 $.mobile.loading('hide');
             }
